@@ -1,6 +1,6 @@
 Django Navbuilder
 =================
-**Build hieracical navigation objects from multiple link objects**
+**Build hierarchical navigation objects from multiple link objects**
 
 .. figure:: https://travis-ci.org/praekelt/django-navbuilder.svg?branch=develop
    :align: center

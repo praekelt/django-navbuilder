@@ -4,7 +4,7 @@ description_files = ["README.rst", "AUTHORS.rst", "CHANGELOG.rst"]
 
 setup(
     name="django-navbuilder",
-    description="Build hieracical navigation objects from multiple link objects",
+    description="Build hierarchical navigation objects from multiple link objects",
     long_description="".join([open(f, "r").read() for f in description_files]),
     version="0.0.1",
     author="Praekelt Consulting",
