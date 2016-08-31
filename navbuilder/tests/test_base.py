@@ -29,6 +29,18 @@ class ModelTestCase(TestCase):
         }
         self.menuitem = models.MenuItem.objects.create(**self.menuitem_data)
 
+        self.sub_menuitem_data = {
+            "title": "Menu Item 1",
+            "slug": "menu-item-1",
+            "position": 1,
+            "menu": self.menu,
+            "parent": self.menuitem,
+            "link": self.link
+        }
+        self.sub_menuitem = models.MenuItem.objects.create(
+            **self.sub_menuitem_data
+        )
+
     def test_link(self):
 
         # ensure the data was saved correctly
@@ -46,6 +58,13 @@ class ModelTestCase(TestCase):
         # ensure the data was saved correctly
         for key, value in self.menuitem_data.items():
             self.assertEqual(getattr(self.menuitem, key), value)
+
+        # ensure the sub menu item data was saved correctly
+        for key, value in self.sub_menuitem_data.items():
+            self.assertEqual(getattr(self.sub_menuitem, key), value)
+
+        # ensure the parent menu item is accessible
+        self.assertEqual(self.sub_menuitem.parent, self.menuitem)
 
 
 class AdminTestCase(TestCase):
