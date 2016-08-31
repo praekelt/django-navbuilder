@@ -11,6 +11,7 @@ ROOT_URLCONF = "navbuilder.tests.urls"
 
 INSTALLED_APPS = [
     "test_without_migrations",
+    "link",
     "navbuilder",
     "navbuilder.tests",
     "django.contrib.admin",
