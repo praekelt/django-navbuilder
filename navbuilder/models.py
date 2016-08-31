@@ -5,7 +5,9 @@ from django.db import models
 from navbuilder import SETTINGS
 
 
-LINK_MODEL = import_module(SETTINGS["LINK_MODEL"])
+LINK_PATH = SETTINGS["LINK_MODEL"].split(".")
+LINK_MODULE = import_module(".".join(LINK_PATH[:-1]))
+LINK_MODEL = getattr(LINK_MODULE, LINK_PATH[-1])
 
 
 class Menu(models.Model):
