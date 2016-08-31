@@ -1,15 +1,15 @@
 from django.contrib import admin
 
-from navbuilder.forms import NavBuilderAdminForm
-from navbuilder.models import Menu, MenuItem
+from navbuilder.forms import MenuAdminForm, MenuItemAdminForm
+from navbuilder.models import Menu
 
 
 class MenuItemInline(admin.StackedInline):
-    model = MenuItem
+    form = MenuItemAdminForm
 
 
 class MenuAdmin(admin.ModelAdmin):
-    form = NavBuilderAdminForm
+    form = MenuAdminForm
     list_display = ["title"]
     inlines = [MenuItemInline]
 
