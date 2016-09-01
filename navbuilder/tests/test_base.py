@@ -81,10 +81,12 @@ class AdminTestCase(TestCase):
         self.client.login(username="editor", password="password")
 
     def test_admin(self):
-        pass
+        response = self.client.post("/admin/")
+        self.assertEqual(response.status_code, 200)
 
-    def test_admin_link(self):
-        pass
+    def test_admin_menu(self):
+        response = self.client.post("/admin/navbuilder/menu/add/")
+        self.assertEqual(response.status_code, 200)
 
     def tearDown(self):
         self.client.logout()

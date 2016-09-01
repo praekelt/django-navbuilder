@@ -14,3 +14,6 @@ class MenuItemAdminForm(forms.ModelForm):
     class Meta:
         model = MenuItem
         fields = ["title", "slug", "position", "menu", "parent", "link"]
+
+    def clean_parent(self):
+        pass

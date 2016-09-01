@@ -1,11 +1,12 @@
 from django.contrib import admin
 
 from navbuilder.forms import MenuAdminForm, MenuItemAdminForm
-from navbuilder.models import Menu
+from navbuilder.models import Menu, MenuItem
 
 
 class MenuItemInline(admin.StackedInline):
     form = MenuItemAdminForm
+    model = MenuItem
 
 
 class MenuAdmin(admin.ModelAdmin):
