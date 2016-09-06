@@ -1,45 +1,49 @@
 from django.contrib.auth import get_user_model
+from django.core.urlresolvers import reverse
 from django.test import TestCase
 from django.test.client import Client
 
 from navbuilder import models
 
 
+def load_fixtures(kls):
+    kls.menu_data = {
+        "title": "Menu 1",
+        "slug": "menu-1"
+    }
+    kls.menu = models.Menu.objects.create(**kls.menu_data)
+
+    kls.link_data = {
+        "title": "Menu 1",
+        "slug": "menu-1",
+        "url": "/link/1/"
+    }
+    kls.link = models.LINK_MODEL.objects.create(**kls.link_data)
+
+    kls.menuitem_data = {
+        "title": "Menu Item 1",
+        "slug": "menu-item-1",
+        "position": 1,
+        "menu": kls.menu,
+        "link": kls.link
+    }
+    kls.menuitem = models.MenuItem.objects.create(**kls.menuitem_data)
+
+    kls.sub_menuitem_data = {
+        "title": "Sub Menu Item 1",
+        "slug": "sub-menu-item-1",
+        "position": 1,
+        "parent": kls.menuitem,
+        "link": kls.link
+    }
+    kls.sub_menuitem = models.MenuItem.objects.create(
+        **kls.sub_menuitem_data
+    )
+
+
 class ModelTestCase(TestCase):
     def setUp(self):
-        self.menu_data = {
-            "title": "Menu 1",
-            "slug": "menu-1"
-        }
-        self.menu = models.Menu.objects.create(**self.menu_data)
-
-        self.link_data = {
-            "title": "Menu 1",
-            "slug": "menu-1",
-            "url": "/link/1/"
-        }
-        self.link = models.LINK_MODEL.objects.create(**self.link_data)
-
-        self.menuitem_data = {
-            "title": "Menu Item 1",
-            "slug": "menu-item-1",
-            "position": 1,
-            "menu": self.menu,
-            "link": self.link
-        }
-        self.menuitem = models.MenuItem.objects.create(**self.menuitem_data)
-
-        self.sub_menuitem_data = {
-            "title": "Menu Item 1",
-            "slug": "menu-item-1",
-            "position": 1,
-            "menu": self.menu,
-            "parent": self.menuitem,
-            "link": self.link
-        }
-        self.sub_menuitem = models.MenuItem.objects.create(
-            **self.sub_menuitem_data
-        )
+        load_fixtures(self)
 
     def test_link(self):
 
@@ -95,9 +99,16 @@ class AdminTestCase(TestCase):
 class ViewTestCase(TestCase):
     def setUp(self):
         self.client = Client()
+        load_fixtures(self)
 
     def test_detail(self):
-        pass
+        response = self.client.get(
+            reverse(
+                "navbuilder:menu-detail",
+                kwargs={"slug": self.menu_data["slug"]}
+            )
+        )
+        print response
 
     def test_list(self):
         pass
