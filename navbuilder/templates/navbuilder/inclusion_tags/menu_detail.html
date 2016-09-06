@@ -1,1 +1,8 @@
+{% load navbuilder_tags %}
 
+<div>
+    {{ object.title }}
+    {% for menuitem in object.menuitems.all %}
+        <div>{% render_menuitem menuitem %}</div>
+    {% endfor %}
+</div>
