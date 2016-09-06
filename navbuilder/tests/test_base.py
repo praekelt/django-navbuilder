@@ -14,8 +14,8 @@ def load_fixtures(kls):
     kls.menu = models.Menu.objects.create(**kls.menu_data)
 
     kls.link_data = {
-        "title": "Menu 1",
-        "slug": "menu-1",
+        "title": "Link 1",
+        "slug": "link-1",
         "url": "/link/1/"
     }
     kls.link = models.LINK_MODEL.objects.create(**kls.link_data)
@@ -108,7 +108,12 @@ class ViewTestCase(TestCase):
                 kwargs={"slug": self.menu_data["slug"]}
             )
         )
-        print response
+
+        # ensure the menu contains all elements
+        self.assertContains(response, self.menu.slug)
+        self.assertContains(response, self.menuitem.slug)
+        self.assertContains(response, self.sub_menuitem.slug)
+        self.assertContains(response, self.menuitem.link.slug)
 
     def test_list(self):
         pass
