@@ -16,18 +16,12 @@ Installation
 
 #. Add ``navbuilder`` to your ``INSTALLED_APPS`` setting.
 
+#. Add ``url(r'^navbuilder/', include("navbuilder.urls", namespace="navbuilder"))`` to your ``url patterns`` (only required if you intend on using the list/detail views)
+
+#. If you prefer to use you're own Link model add it in: ``settings.NAVBUILDER["LINK_MODEL"]`` otherwise https://github.com/praekelt/django-link will need to be installed.
+
 Usage
 -----
 
-...
-
-
-How does it work?
------------------
-
-...
-
-Tips
-----
-
-...
+Use the inclusion tag which has been provided:
+``{% render_menu object %}``
