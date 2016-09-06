@@ -33,7 +33,9 @@ class MenuItem(models.Model):
         max_length=256, db_index=True
     )
     position = models.PositiveIntegerField()
-    menu = models.ForeignKey(Menu, related_name="menuitems")
+    menu = models.ForeignKey(
+        Menu, related_name="menuitems", blank=True, null=True
+    )
     parent = models.ForeignKey(
         "self", related_name="submenuitems", blank=True, null=True
     )
