@@ -1,1 +1,8 @@
-<div>{{ object.title }}</div>
+{% load navbuilder_tags %}
+
+<div class="Menu-item" data-slug="{{ object.slug }}">
+    <a class="Link" href="{{ object.link.get_absolute_url }}" title="{{ object.link.title }}" data-slug="{{ object.link.slug }}">{{ object.link.title }}</a>
+    {% for submenuitem in object.submenuitems.all %}
+        {% render_menuitem submenuitem %}
+    {% endfor %}
+</div>
