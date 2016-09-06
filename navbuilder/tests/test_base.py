@@ -116,7 +116,16 @@ class ViewTestCase(TestCase):
         self.assertContains(response, self.menuitem.link.slug)
 
     def test_list(self):
-        pass
+        menu_data2 = {
+            "title": "Menu 2 Title",
+            "slug": "menu-2-title"
+        }
+        menu2 = models.Menu.objects.create(**menu_data2)
+        response = self.client.get(reverse("navbuilder:menu-list"))
+
+        # ensure the menu lst is rendered correctly
+        self.assertContains(response, self.menu.slug)
+        self.assertContains(response, menu2.slug)
 
     def tearDown(self):
         pass
