@@ -3,5 +3,6 @@ from django.contrib import admin
 
 
 urlpatterns = [
-    url(r"^admin/", include(admin.site.urls))
+    url(r"^admin/", include(admin.site.urls)),
+    url(r"^navbuilder/", include("navbuilder.urls", namespace="navbuilder")),
 ]
