@@ -3,6 +3,8 @@ from django.core.urlresolvers import reverse
 from django.test import TestCase
 from django.test.client import Client
 
+from link.models import Link
+
 from navbuilder import models
 
 
@@ -18,7 +20,7 @@ def load_fixtures(kls):
         "slug": "link-1",
         "url": "/link/1/"
     }
-    kls.link = models.LINK_MODEL.objects.create(**kls.link_data)
+    kls.link = Link.objects.create(**kls.link_data)
 
     kls.menuitem_data = {
         "title": "Menu Item 1",

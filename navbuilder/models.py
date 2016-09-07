@@ -1,22 +1,13 @@
-from importlib import import_module
-
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
 from django.db import models
-
-from navbuilder import SETTINGS
-
-
-LINK_PATH = SETTINGS["LINK_MODEL"].split(".")
-LINK_MODULE = import_module(".".join(LINK_PATH[:-1]))
-LINK_MODEL = getattr(LINK_MODULE, LINK_PATH[-1])
 
 
 class Menu(models.Model):
     title = models.CharField(
         max_length=256, help_text="A short descriptive title."
     )
-    slug = models.SlugField(
-        max_length=256, db_index=True
-    )
+    slug = models.SlugField(max_length=256, db_index=True)
 
     class Meta:
         ordering = ["title"]
@@ -29,9 +20,7 @@ class MenuItem(models.Model):
     title = models.CharField(
         max_length=256, help_text="A short descriptive title."
     )
-    slug = models.SlugField(
-        max_length=256, db_index=True
-    )
+    slug = models.SlugField(max_length=256, db_index=True)
     position = models.PositiveIntegerField()
     menu = models.ForeignKey(
         Menu, related_name="menuitems", blank=True, null=True
@@ -39,7 +28,9 @@ class MenuItem(models.Model):
     parent = models.ForeignKey(
         "self", related_name="submenuitems", blank=True, null=True
     )
-    link = models.ForeignKey(LINK_MODEL)
+    link_content_type = models.ForeignKey(ContentType, blank=False, null=True)
+    link_object_id = models.PositiveIntegerField(blank=False, null=True)
+    link = GenericForeignKey("link_content_type", "link_object_id")
 
     class Meta:
         ordering = ["title"]

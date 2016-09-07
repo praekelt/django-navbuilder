@@ -13,7 +13,10 @@ class MenuAdminForm(forms.ModelForm):
 class MenuItemAdminForm(forms.ModelForm):
     class Meta:
         model = MenuItem
-        fields = ["title", "slug", "position", "menu", "parent", "link"]
+        fields = [
+            "title", "slug", "position", "menu", "parent", "link_content_type",
+            "link_object_id"
+        ]
 
     def clean_parent(self):
         pass
