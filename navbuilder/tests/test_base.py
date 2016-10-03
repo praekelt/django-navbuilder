@@ -110,8 +110,7 @@ class ViewTestCase(TestCase):
                 kwargs={"slug": self.menu_data["slug"]}
             )
         )
-
-        # ensure the menu contains all elements
+        self.assertEqual(response.status_code, 200)
         self.assertContains(response, self.menu.slug)
         self.assertContains(response, self.menuitem.slug)
         self.assertContains(response, self.sub_menuitem.slug)
@@ -123,9 +122,9 @@ class ViewTestCase(TestCase):
             "slug": "menu-2-title"
         }
         menu2 = models.Menu.objects.create(**menu_data2)
-        response = self.client.get(reverse("navbuilder:menu-list"))
 
-        # ensure the menu lst is rendered correctly
+        response = self.client.get(reverse("navbuilder:menu-list"))
+        self.assertEqual(response.status_code, 200)
         self.assertContains(response, self.menu.slug)
         self.assertContains(response, menu2.slug)
 
