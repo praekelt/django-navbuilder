@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% load navbuilder_tags %}
+
+{% block content %}
+    {% for object in object_list %}
+        {% render_menu object %}
+    {% endfor %}
+{% endblock %}
