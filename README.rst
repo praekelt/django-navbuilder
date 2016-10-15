@@ -24,4 +24,4 @@ Usage
 -----
 
 Use the inclusion tag which has been provided:
-``{% render_menu object %}``
+``{% render_menu slug %}``
