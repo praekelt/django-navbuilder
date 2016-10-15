@@ -9,7 +9,10 @@ register = template.Library()
     "navbuilder/inclusion_tags/menu_detail.html", takes_context=True
 )
 def render_menu(context, slug):
-    context["object"] = Menu.objects.get(slug=slug)
+    try:
+        context["object"] = Menu.objects.get(slug=slug)
+    except Menu.DoesNotExist:
+        pass
     return context
 
 
