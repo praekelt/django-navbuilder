@@ -6,7 +6,7 @@ setup(
     name="django-navbuilder",
     description="Build hierarchical navigation objects from multiple link objects",
     long_description="".join([open(f, "r").read() for f in description_files]),
-    version="0.0.1",
+    version="0.9.0",
     author="Praekelt Consulting",
     author_email="dev@praekelt.com",
     license="BSD",
