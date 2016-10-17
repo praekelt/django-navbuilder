@@ -33,7 +33,7 @@ class MenuItem(models.Model):
     link = GenericForeignKey("link_content_type", "link_object_id")
 
     class Meta:
-        ordering = ["title"]
+        ordering = ["position"]
 
     def __unicode__(self):
         return self.title
