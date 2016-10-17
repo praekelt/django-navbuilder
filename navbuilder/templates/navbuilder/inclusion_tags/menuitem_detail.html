@@ -1,7 +1,7 @@
 {% load navbuilder_tags %}
 
 <div class="Menu-item" data-slug="{{ object.slug }}">
-    <a class="Link" href="{{ object.link.get_absolute_url }}"{% if object.link.title %} title="{{ object.link.title }}"{% endif %}{% if object.link.slug %} data-slug="{{ object.link.slug }}"{% endif %}>{% if object.link.title %}{{ object.link.title }}{% else %}{{ object.link.get_absolute_url }}{% endif %}</a>
+    <a class="Link" href="{{ object.link.get_absolute_url }}" title="{{ object.link.title|default:object.title }}" target="{{ object.target }}" data-slug="{{ object.link.slug|default:object.slug }}">{{ object.link.title|default:object.title }}</a>
     {% for submenuitem in object.submenuitems.all %}
         {% render_menuitem submenuitem %}
     {% endfor %}

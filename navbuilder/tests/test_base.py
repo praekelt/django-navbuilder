@@ -31,6 +31,7 @@ def load_fixtures(kls):
         "slug": "sub-menu-item-1",
         "position": 1,
         "parent": kls.menuitem,
+        "target": "blank",
         "link": kls.link
     }
     kls.sub_menuitem = models.MenuItem.objects.create(
