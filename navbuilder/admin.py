@@ -17,4 +17,23 @@ class MenuAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ["title"]}
 
 
+class MenuItemAdmin(admin.ModelAdmin):
+    form = MenuItemAdminForm
+    list_display = ["title", "_get_absolute_url"]
+    prepopulated_fields = {"slug": ["title"]}
+
+    def _get_absolute_url(self, obj):
+        try:
+            url = obj.link.get_absolute_url()
+        except AttributeError:
+            url = None
+        if url:
+            return "<a href=\"%s\" target=\"public\">%s</a>" % (url, url)
+        return "<p class=\"errornote\">Inactive or broken link</p>"
+
+    _get_absolute_url.short_description = "Permalink"
+    _get_absolute_url.allow_tags = True
+
+
 admin.site.register(Menu, MenuAdmin)
+admin.site.register(MenuItem, MenuItemAdmin)
