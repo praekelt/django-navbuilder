@@ -2,9 +2,11 @@ Django Navbuilder
 =================
 **Build hierarchical navigation objects from multiple link objects**
 
-.. figure:: https://travis-ci.org/praekelt/django-navbuilder.svg?branch=develop
-   :align: center
-   :alt: Travis
+.. image:: https://travis-ci.org/praekelt/django-navbuilder.svg?branch=develop
+    :target: https://travis-ci.org/praekelt/django-navbuilder
+
+.. image:: https://coveralls.io/repos/github/praekelt/django-navbuilder/badge.svg?branch=develop
+    :target: https://coveralls.io/github/praekelt/django-navbuilder?branch=develop
 
 .. contents:: Contents
     :depth: 5
