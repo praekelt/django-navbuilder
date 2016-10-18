@@ -17,6 +17,3 @@ class MenuItemAdminForm(forms.ModelForm):
             "title", "slug", "position", "menu", "parent", "target",
             "link_content_type", "link_object_id"
         ]
-
-    def clean_parent(self):
-        pass
