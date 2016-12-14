@@ -33,7 +33,18 @@ class BreadcrumbsTestCase(TestCase):
         self.sub_menuitem_2.link = self.link
 
 
-    def test_breadcrumbs(self):
+    def test_single_level(self):
+        # The link object maps to a single level in menu 2
+        out = crumb_template_2.render(Context({"object": self.link}))
+        self.assertHTMLEqual(out, """
+                <a class="Crumb" href="/link/1/" title="Link 1"
+                target="" data-slug="link-1">
+                    Link 1
+                </a>
+                """
+                )
+
+    def test_multilevel(self):
         # The link object maps to the submenu in menu 1
         out = crumb_template_1.render(Context({"object": self.link}))
         self.assertHTMLEqual(out, """
@@ -47,19 +58,18 @@ class BreadcrumbsTestCase(TestCase):
                     Link 1
                 </a>
                 """
+                )
 
-        # The link object maps to a single level in menu 2
-        out = crumb_template_2.render(Context({"object": self.link}))
-        self.assertHTMLEqual(out, """
-                <a class="Crumb" href="/link/1/" title="Link 1"
-                target="" data-slug="link-1">
-                    Link 1
-                </a>
-                """
-
+    def test_menu_slug_not_found(self):
         # If we cannot identify the menu it comes from, take the first one.
         out = crumb_template_3.render(Context({"object": self.link}))
         self.assertIn("Link 1", out)
+
+    def test_no_matching_menuitem(self):
+        # If the object does not show up in any menu, render nothing
+        self.menuitem_2.link = None
+        out = crumb_template_3.render(Context({"object": self.link_2}))
+        self.assertHTMLEqual("", out)
 
     def tearDown(self):
         pass

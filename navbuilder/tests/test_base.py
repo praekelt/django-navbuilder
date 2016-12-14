@@ -58,7 +58,7 @@ def load_crumb_fixtures(kls):
         "slug": "menu-item-2",
         "position": 2,
         "menu": kls.menu_2,
-        "link": kls.link_2
+        "link": kls.link
     }
     kls.menuitem_2 = models.MenuItem.objects.create(**kls.menuitem_data_2)
 
@@ -68,7 +68,7 @@ def load_crumb_fixtures(kls):
         "position": 2,
         "parent": kls.menuitem_2,
         "target": "blank",
-        "link": kls.link_2
+        "link": None
     }
     kls.sub_menuitem_2 = models.MenuItem.objects.create(
         **kls.sub_menuitem_data_2
