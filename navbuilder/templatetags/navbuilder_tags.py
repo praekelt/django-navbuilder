@@ -62,5 +62,9 @@ def navbuilder_breadcrumbs(context, slug):
             context["navbuilder_breadcrumbs"] = crumb_set
 
     if not context["navbuilder_breadcrumbs"]:
-        context["navbuilder_breadcrumbs"] = crumb_sets[0]
+        if crumb_sets:
+            context["navbuilder_breadcrumbs"] = crumb_sets[0]
+        else:
+            context["navbuilder_breadcrumbs"] = []
+
     return context
