@@ -11,18 +11,17 @@ register = template.Library()
 )
 def render_menu(context, slug):
     try:
-        context["object"] = Menu.objects.get(slug=slug)
+        return {"object": Menu.objects.get(slug=slug)}
     except Menu.DoesNotExist:
         pass
-    return context
+    return {}
 
 
 @register.inclusion_tag(
     "navbuilder/inclusion_tags/menuitem_detail.html", takes_context=True
 )
 def render_menuitem(context, obj):
-    context["object"] = obj
-    return context
+    return {"object": obj}
 
 
 @register.inclusion_tag(
@@ -37,9 +36,10 @@ def navbuilder_breadcrumbs(context, slug):
     prefer the main menu structure. This also allows us to construct
     breadcrumbs for items that don't show up in page menus at all.
     """
-    context["navbuilder_breadcrumbs"] = []
+    di = {}
+    di["navbuilder_breadcrumbs"] = []
     if "object" not in context:
-        return context
+        return {}
 
     def get_menuitems(item):
         if item.parent:
@@ -59,12 +59,12 @@ def navbuilder_breadcrumbs(context, slug):
     for crumb_set in crumb_sets:
         menu = crumb_set[0].menu
         if menu and menu.slug == slug:
-            context["navbuilder_breadcrumbs"] = crumb_set
+            di["navbuilder_breadcrumbs"] = crumb_set
 
-    if not context["navbuilder_breadcrumbs"]:
+    if not di["navbuilder_breadcrumbs"]:
         if crumb_sets:
-            context["navbuilder_breadcrumbs"] = crumb_sets[0]
+            di["navbuilder_breadcrumbs"] = crumb_sets[0]
         else:
-            context["navbuilder_breadcrumbs"] = []
+            di["navbuilder_breadcrumbs"] = []
 
-    return context
+    return di
