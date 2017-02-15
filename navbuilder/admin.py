@@ -15,12 +15,15 @@ class MenuAdmin(admin.ModelAdmin):
     list_display = ["title"]
     inlines = [MenuItemInline]
     prepopulated_fields = {"slug": ["title"]}
+    search_fields = ["title", "slug"]
 
 
 class MenuItemAdmin(admin.ModelAdmin):
     form = MenuItemAdminForm
-    list_display = ["title", "_get_absolute_url"]
+    list_display = ["title", "parent", "_get_absolute_url"]
     prepopulated_fields = {"slug": ["title"]}
+    search_fields = ["title", "slug"]
+    list_filter = ["menu"]
 
     def _get_absolute_url(self, obj):
         try:
