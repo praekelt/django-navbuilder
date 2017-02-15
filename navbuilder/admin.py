@@ -23,7 +23,7 @@ class MenuItemAdmin(admin.ModelAdmin):
     list_display = ["title", "parent", "_get_absolute_url"]
     prepopulated_fields = {"slug": ["title"]}
     search_fields = ["title", "slug"]
-    list_filter = ["menu",]
+    list_filter = ["menu"]
 
     def _get_absolute_url(self, obj):
         try:
