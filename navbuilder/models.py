@@ -63,6 +63,11 @@ class MenuItem(models.Model):
 
         super(MenuItem, self).save(*args, **kwargs)
 
+        # Set root menu for descendants. This will trigger the required
+        # recursion.
+        for child in self.submenuitems.all():
+            child.save()
+
     def absolute_url(self):
         return self.get_absolute_url()
 
