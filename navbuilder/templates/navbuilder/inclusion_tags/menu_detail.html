@@ -1,7 +1,7 @@
 {% load navbuilder_tags %}
 
 <div class="Menu" data-slug="{{ object.slug }}">
-    {% for object in object.menuitems.all %}
-        {% include "navbuilder/inclusion_tags/menuitem_detail.html" %}
+    {% for menuitem in object.menuitems.all %}
+        {% render_menuitem menuitem %}
     {% endfor %}
 </div>

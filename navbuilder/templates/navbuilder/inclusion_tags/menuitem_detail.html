@@ -2,7 +2,7 @@
 
 <div class="Menu-item" data-slug="{{ object.slug }}">
     <a class="Link" href="{{ object.link.get_absolute_url }}" title="{{ object.link.title|default:object.title }}" target="{{ object.target|default:"" }}" data-slug="{{ object.link.slug|default:object.slug }}">{{ object.link.title|default:object.title }}</a>
-    {% for object in object.menuitems.all %}
-        {% include "navbuilder/inclusion_tags/menuitem_detail.html" %}
+    {% for menuitem in object.menuitems.all %}
+        {% render_menuitem menuitem %}
     {% endfor %}
 </div>

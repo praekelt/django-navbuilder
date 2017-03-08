@@ -107,6 +107,13 @@ def render_menu(context, slug):
 
 
 @register.inclusion_tag(
+    "navbuilder/inclusion_tags/menuitem_detail.html", takes_context=True
+)
+def render_menuitem(context, obj):
+    return {"object": obj}
+
+
+@register.inclusion_tag(
     "navbuilder/inclusion_tags/breadcrumbs.html", takes_context=True
 )
 def navbuilder_breadcrumbs(context, slug):
