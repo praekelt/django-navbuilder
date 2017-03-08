@@ -13,7 +13,7 @@ def render_menu(context, slug):
     try:
         menu = Menu.objects.get(slug=slug)
     except Menu.DoesNotExist:
-        return {}
+        return context
 
     # This wrapper emulates the queryset API expected by templates
     class Wrapper(object):
@@ -30,12 +30,15 @@ def render_menu(context, slug):
             except AttributeError:
                 return getattr(self._context, name)
 
+        @property
         def menuitems(self):
             return {"all": self._menuitems}
 
+        @property
         def submenuitems(self):
             return {"all": self._submenuitems}
 
+        @property
         def link(self):
             return self._link
 
@@ -107,14 +110,16 @@ def render_menu(context, slug):
             if parent_id in nodes:
                 nodes[parent_id]._submenuitems.append(node)
 
-    return {"object": menu}
+    context["object"] = menu
+    return context
 
 
 @register.inclusion_tag(
     "navbuilder/inclusion_tags/menuitem_detail.html", takes_context=True
 )
 def render_menuitem(context, obj):
-    return {"object": obj}
+    context["object"] = obj
+    return context
 
 
 @register.inclusion_tag(
@@ -132,7 +137,7 @@ def navbuilder_breadcrumbs(context, slug):
     di = {}
     di["navbuilder_breadcrumbs"] = []
     if "object" not in context:
-        return {}
+        return context
 
     def get_menuitems(item):
         if item.parent:
@@ -160,4 +165,5 @@ def navbuilder_breadcrumbs(context, slug):
         else:
             di["navbuilder_breadcrumbs"] = []
 
-    return di
+    context.update(di)
+    return context
