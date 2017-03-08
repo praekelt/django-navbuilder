@@ -21,6 +21,7 @@ def render_menu(context, slug):
         def __init__(self, context):
             self._context = context
             self._menuitems = []
+            self._submenuitems = []
             self._link = None
 
         def __getattr__(self, name):
@@ -31,6 +32,9 @@ def render_menu(context, slug):
 
         def menuitems(self):
             return {"all": self._menuitems}
+
+        def submenuitems(self):
+            return {"all": self._submenuitems}
 
         def link(self):
             return self._link
@@ -101,7 +105,7 @@ def render_menu(context, slug):
         else:
             # The "if" statement is to account for bad data
             if parent_id in nodes:
-                nodes[parent_id]._menuitems.append(node)
+                nodes[parent_id]._submenuitems.append(node)
 
     return {"object": menu}
 
