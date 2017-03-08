@@ -7,6 +7,7 @@ from navbuilder.models import Menu, MenuItem
 class MenuItemInline(admin.StackedInline):
     form = MenuItemAdminForm
     model = MenuItem
+    fk_name = "menu"
     prepopulated_fields = {"slug": ["title"]}
 
 
