@@ -6,12 +6,6 @@ from django.db import migrations, models
 import django.db.models.deletion
 
 
-def set_root_menu(apps, schema_editor):
-    MenuItem = apps.get_model("navbuilder", "MenuItem")
-    for obj in MenuItem.objects.all():
-        obj.save()
-
-
 class Migration(migrations.Migration):
 
     dependencies = [
@@ -23,6 +17,5 @@ class Migration(migrations.Migration):
             model_name='menuitem',
             name='root_menu',
             field=models.ForeignKey(editable=False, null=True, on_delete=django.db.models.deletion.CASCADE, to='navbuilder.Menu'),
-        ),
-        migrations.RunPython(set_root_menu),
+        )
     ]
