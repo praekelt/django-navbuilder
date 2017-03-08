@@ -7,8 +7,9 @@ from navbuilder.tests.test_base import load_fixtures
 
 
 class ViewTestCase(TestCase):
+
     def setUp(self):
-        self.client = Client()
+        super(ViewTestCase, self).setUp()
         load_fixtures(self)
 
     def test_detail(self):

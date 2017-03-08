@@ -40,12 +40,33 @@ class MenuItem(models.Model):
     link_content_type = models.ForeignKey(ContentType, blank=False, null=True)
     link_object_id = models.PositiveIntegerField(blank=False, null=True)
     link = GenericForeignKey("link_content_type", "link_object_id")
+    root_menu = models.ForeignKey(Menu, null=True, editable=False)
 
     class Meta:
         ordering = ["position"]
 
     def __unicode__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+
+        # Set the root menu
+        parent = self.parent
+        while getattr(parent, "parent", None) is not None:
+            if parent is self:
+                raise RuntimeError("Circular dependency detected")
+            parent = parent.parent
+        if parent is not None:
+            self.root_menu = parent.menu
+        else:
+            self.root_menu = self.menu
+
+        super(MenuItem, self).save(*args, **kwargs)
+
+        # Set root menu for descendants. This will trigger the required
+        # recursion.
+        for child in self.submenuitems.all():
+            child.save()
 
     def absolute_url(self):
         return self.get_absolute_url()

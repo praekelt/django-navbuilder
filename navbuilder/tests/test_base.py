@@ -9,7 +9,7 @@ def load_fixtures(kls):
         "slug": "menu-1"
     }
     kls.menu = models.Menu.objects.create(**kls.menu_data)
-
+ 
     kls.link_data = {
         "title": "Link 1",
         "slug": "link-1",

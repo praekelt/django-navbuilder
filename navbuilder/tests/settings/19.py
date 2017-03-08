@@ -13,10 +13,12 @@ INSTALLED_APPS = [
     "link",
     "navbuilder",
     "navbuilder.tests",
+    "ultracache",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
+    "django.contrib.sites",
     "django.contrib.messages",
     "django.contrib.staticfiles"
 ]

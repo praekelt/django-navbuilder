@@ -1,8 +1,10 @@
-{% load navbuilder_tags %}
+{% load navbuilder_tags ultracache_tags %}
 
+{% ultracache 3600 "navbuilder-mid" object.id %}
 <div class="Menu-item" data-slug="{{ object.slug }}">
     <a class="Link" href="{{ object.link.get_absolute_url }}" title="{{ object.link.title|default:object.title }}" target="{{ object.target|default:"" }}" data-slug="{{ object.link.slug|default:object.slug }}">{{ object.link.title|default:object.title }}</a>
-    {% for submenuitem in object.submenuitems.all %}
-        {% render_menuitem submenuitem %}
+    {% for menuitem in object.submenuitems.all %}
+        {% render_menuitem menuitem %}
     {% endfor %}
 </div>
+{% endultracache %}
