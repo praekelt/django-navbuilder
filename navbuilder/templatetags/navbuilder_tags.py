@@ -64,6 +64,8 @@ def render_menu(context, slug):
     for menuitem in menuitems:
         ct_id = menuitem.link_content_type_id
         link_id = menuitem.link_object_id
+        if not link_id:
+            continue
 
         # map_ct_links
         if ct_id not in map_ct_links:
