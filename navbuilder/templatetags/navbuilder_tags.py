@@ -6,6 +6,43 @@ from navbuilder.models import Menu, MenuItem
 register = template.Library()
 
 
+# These wrappers emulate the queryset API expected by templates.
+# todo: use metaclasses
+class Wrapper(object):
+
+    def __init__(self, context):
+        self._context = context
+        self._menuitems = []
+        self._submenuitems = []
+        self._link = None
+
+    def __getattr__(self, name):
+        try:
+            return super(Wrapper, self).__getattr__(name)
+        except AttributeError:
+            return getattr(self._context, name)
+
+    @property
+    def menuitems(self):
+        return {"all": self._menuitems}
+
+    @property
+    def submenuitems(self):
+        return {"all": self._submenuitems}
+
+    @property
+    def link(self):
+        return self._link
+
+
+class MenuWrapper(Wrapper):
+    __class__ = Menu
+
+
+class MenuItemWrapper(Wrapper):
+    __class__ = MenuItem
+
+
 @register.inclusion_tag(
     "navbuilder/inclusion_tags/menu_detail.html", takes_context=True
 )
@@ -14,33 +51,6 @@ def render_menu(context, slug):
         menu = Menu.objects.get(slug=slug)
     except Menu.DoesNotExist:
         return context
-
-    # This wrapper emulates the queryset API expected by templates
-    class Wrapper(object):
-
-        def __init__(self, context):
-            self._context = context
-            self._menuitems = []
-            self._submenuitems = []
-            self._link = None
-
-        def __getattr__(self, name):
-            try:
-                return super(Wrapper, self).__getattr__(name)
-            except AttributeError:
-                return getattr(self._context, name)
-
-        @property
-        def menuitems(self):
-            return {"all": self._menuitems}
-
-        @property
-        def submenuitems(self):
-            return {"all": self._submenuitems}
-
-        @property
-        def link(self):
-            return self._link
 
     # Reduce the number of queries by using select_related and a number of
     # dictionaries. We present the template with a single structure.
@@ -51,7 +61,7 @@ def render_menu(context, slug):
     for obj in MenuItem.objects.filter(root_menu=menu).select_related(
         "parent"
     ):
-        menuitems.append(Wrapper(obj))
+        menuitems.append(MenuItemWrapper(obj))
 
     # Key is content type id, value is link id
     map_ct_links = {}
@@ -97,7 +107,7 @@ def render_menu(context, slug):
 
     # Create the tree and set the parent-child relationships. Menu can now be
     # wrapped.
-    menu = Wrapper(menu)
+    menu = MenuWrapper(menu)
     for obj in menuitems:
         if obj.parent is not None:
             parent_id = obj.parent.id
