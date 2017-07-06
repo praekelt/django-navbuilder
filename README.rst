@@ -20,8 +20,6 @@ Installation
 
 #. Add ``url(r'^navbuilder/', include("navbuilder.urls", namespace="navbuilder"))`` to your ``url patterns`` (only required if you intend on using the list/detail views)
 
-#. If you prefer to use your own Link model add it in: ``settings.NAVBUILDER["LINK_MODEL"]`` otherwise https://github.com/praekelt/django-link will need to be installed.
-
 Usage
 -----
 
@@ -49,3 +47,4 @@ Inclusion tag usage:
 
 The very specific naming for the tag is used so that it could be used with
 other breadcrumb generators as a fallback.
+
