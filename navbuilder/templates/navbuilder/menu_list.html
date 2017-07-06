@@ -4,6 +4,6 @@
 
 {% block content %}
     {% for object in object_list %}
-        {% render_menu object %}
+        {% render_menu object.slug %}
     {% endfor %}
 {% endblock %}

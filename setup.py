@@ -6,7 +6,7 @@ setup(
     name="django-navbuilder",
     description="Build hierarchical navigation objects from multiple link objects",
     long_description="".join([open(f, "r").read() for f in description_files]),
-    version="0.9.0",
+    version="0.1",
     author="Praekelt Consulting",
     author_email="dev@praekelt.com",
     license="BSD",
@@ -14,7 +14,8 @@ setup(
     packages=find_packages(),
     dependency_links=[],
     install_requires=[
-        "django"
+        "django",
+        "django-ultracache"
     ],
     classifiers=[
         "Programming Language :: Python",
@@ -24,5 +25,6 @@ setup(
         "Intended Audience :: Developers",
         "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
     ],
-    zip_safe=False
+    zip_safe=False,
+    include_package_data=True
 )

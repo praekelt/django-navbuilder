@@ -1,0 +1,5 @@
+{% load navbuilder_tags %}
+{% for crumb in navbuilder_breadcrumbs %}
+    <a class="Crumb" href="{{ crumb.link.get_absolute_url }}" title="{{ crumb.link.title|default:crumb.title }}" target="{{ crumb.target|default:"" }}" data-slug="{{ crumb.link.slug|default:crumb.slug }}">{{ crumb.link.title|default:crumb.title }}</a>
+    {% if not forloop.last %} > {% endif %}
+{% endfor %}
