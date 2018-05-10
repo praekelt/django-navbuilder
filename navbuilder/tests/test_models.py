@@ -18,7 +18,7 @@ class ModelTestCase(TestCase):
     def test_menu(self):
         for key, value in self.menu_data.items():
             self.assertEqual(getattr(self.menu, key), value)
-        self.assertEqual(unicode(self.menu), self.menu.title)
+        self.assertEqual(str(self.menu), self.menu.title)
 
     def test_menuitem(self):
         for key, value in self.menuitem_data.items():
@@ -26,7 +26,7 @@ class ModelTestCase(TestCase):
         for key, value in self.sub_menuitem_data.items():
             self.assertEqual(getattr(self.sub_menuitem, key), value)
         self.assertEqual(self.sub_menuitem.parent, self.menuitem)
-        self.assertEqual(unicode(self.menuitem), self.menuitem.title)
+        self.assertEqual(str(self.menuitem), self.menuitem.title)
         self.assertEqual(self.sub_menuitem.root_menu, self.menuitem.menu)
 
         # Change the menuitem's menu and confirm root_menu is updated

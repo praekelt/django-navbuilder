@@ -1,6 +1,9 @@
-from django.core.urlresolvers import reverse
 from django.test import TestCase
 from django.test.client import Client
+try:
+    from django.urls import reverse
+except ImportError:
+    from django.core.urlresolvers import reverse
 
 from navbuilder import models
 from navbuilder.tests.test_base import load_fixtures, load_crumb_fixtures

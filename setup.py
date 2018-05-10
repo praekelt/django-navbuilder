@@ -14,8 +14,8 @@ setup(
     packages=find_packages(),
     dependency_links=[],
     install_requires=[
-        "django",
-        "django-ultracache"
+        "django-link>=2.0",
+        "django-ultracache>=1.11.10",
     ],
     classifiers=[
         "Programming Language :: Python",

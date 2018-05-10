@@ -21,6 +21,8 @@ class Menu(models.Model):
     def __unicode__(self):
         return self.title
 
+    __str__ = __unicode__
+
 
 class MenuItem(models.Model):
     title = models.CharField(
@@ -29,24 +31,32 @@ class MenuItem(models.Model):
     slug = models.SlugField(max_length=256, db_index=True)
     position = models.PositiveIntegerField()
     menu = models.ForeignKey(
-        Menu, related_name="menuitems", blank=True, null=True
+        Menu, related_name="menuitems", blank=True, null=True,
+        on_delete=models.CASCADE
     )
     parent = models.ForeignKey(
-        "self", related_name="submenuitems", blank=True, null=True
+        "self", related_name="submenuitems", blank=True, null=True,
+        on_delete=models.CASCADE
     )
     target = models.CharField(
         max_length=256, choices=TARGET_CHOICES, blank=True, null=True
     )
-    link_content_type = models.ForeignKey(ContentType, blank=False, null=True)
+    link_content_type = models.ForeignKey(
+        ContentType, blank=False, null=True, on_delete=models.CASCADE
+    )
     link_object_id = models.PositiveIntegerField(blank=False, null=True)
     link = GenericForeignKey("link_content_type", "link_object_id")
-    root_menu = models.ForeignKey(Menu, null=True, editable=False)
+    root_menu = models.ForeignKey(
+        Menu, null=True, editable=False, on_delete=models.CASCADE
+    )
 
     class Meta:
         ordering = ["position"]
 
     def __unicode__(self):
         return self.title
+
+    __str__ = __unicode__
 
     def save(self, *args, **kwargs):
 
